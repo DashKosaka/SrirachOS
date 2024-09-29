@@ -1,0 +1,98 @@
+SrirachOS Bug Log
+
+CP1:
+
+Bug: IDT would not load properly
+How it was fixed: Used lidt to load it properly
+Estimated time spent: 1 hour
+
+Bug: Persistant page faulting
+How it was fixed: PIC arguments order were swapped 
+Estimated time spent: 2 hours
+
+Bug: PIC had issues when a slave port was used
+How it was fixed: Added statement in send_eoi to let the master know the interrupt was finished
+Estimated time spent: 1 hour
+
+Bug: Paging structures would not work 
+How it was fixed: Changed to bitwise modification of the page tables, directories, etc.
+Estimated time spent: 1 hours
+
+Bug: Paging would not initialize correctly (tried to read NULL or similar)
+How it was fixed: Set the correct bit while initializing the cr4? register
+Estimated time spent: 2 hours - we assumed that we already had the flags for paging right
+
+CP2:
+Bug: Some data could not be read from files (because of nulls present in the file)
+How it was fixed: Made buffer specific to how many bytes had to be read
+Estimated time spent: 2.5 hours
+
+Bug: Filesystem would print out the wrong format characters
+How it was fixed: Instead of using putc, we used statements with characters for each character
+Estimated time spent: 30 minutes
+
+Bug: Dir_read would print out all of the contents on single call
+How it was fixed: Restructure function to read only one line at a time
+Estimated time spent: 1 hour
+
+Bug: RTC would send only one interrupt
+How it was fixed: Added condition to wait in rtc_read until an interrupt was captured in rtc_handler
+Estimated time spent: 1 hour
+
+Bug: Keyboard aparrently printing wrong keys
+How it was fixed: Changed which scnacode set was used
+Estimated time spent: 30 minutes
+
+
+CP3:
+Bug: Terminal_write return value would always return (nbytes-1)
+How it was fixed: Made index increment on last iteration 
+Estimated time spent: 30 min - we thought the bug was in filesys
+
+Bug: Page faulting right after calling iret when working on system calls
+How it was fixed: Set the correct bit in the page (supervisor bit) along with other things
+Estimated time spent: 6 hours
+
+Bug: Programs like pingpong were very slow
+How it was fixed: Was not treating buf as a pointer, changed to treat it as such
+Estimated time spent: 2 hours
+
+Bug: New lines printed when pingpong ran
+How it was fixed: Had forgotten a print statement in rtc read, removed it
+Estimated time spent: 2 hours
+
+Bug: dir_read() was reading over 32 bytes per file name when it was longer that 32.
+How it was fixed:  Limited size of bytes read to 32 bytes.
+Estimated time spent: 30 minutes.
+
+
+CP4:
+Bug: Page fault on trying to run fish program
+How it was fixed: We changed the page from a 4mb page to a 4kb page and mapped it correctly
+Estimated time spend: 1.5 hours
+
+
+CP5:
+***
+Bug: Changing terminals would not change relevant visuals
+How it was fixed: Created backapages for each terminal at certain and addresses and copied back and forth using memcopy
+Estimated time spent: 4.5 hours
+
+Bug: Processes were not separate from each other in different terminals and would not run concurrently
+How it was fixed: Added multiple buffers for each terminal, added condition checks if the active process was on the active terminal
+Estimated time spent: 8 hours
+
+Bug: Fish would not show up after running and switching terminals back and forth
+How it was fixed: Redirected page mapping
+Estimated time spent: 4 hours
+
+Bug: Processes were being starved and not run
+How it was fixed: Loop through termials checking for process to run instead of process array
+Estimated time spent: 1 hour
+
+
+***
+Bug: 
+How it was fixed:
+Estimated time spent:
+
